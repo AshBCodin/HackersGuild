@@ -1,14 +1,16 @@
 package hackersguild
 
 import (
-    "fmt"
+    "html/template"
     "net/http"
 )
 
 func init() {
-    http.HandleFunc("/", handler)
+    http.HandleFunc("/", indexHandler)
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprint(w, "<h1>Hack the planet!</h1>")
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+  var indexTempl = template.Must(template.ParseFiles("HTML/index.html"))
+  w.Header().Set("Content-Type", "text/html")
+  indexTempl.Execute(w, nil)
 }
